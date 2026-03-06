@@ -1,0 +1,8 @@
+local-config.json
+feature-context.json
+feature-contexts/
+current-feature
+feature-history.json
+settings.local.json
+skills/*-wip/
+plans/
