@@ -1,0 +1,4 @@
+{
+  "_doc": "Optional file. Keep empty if working solo. Skills must continue when this file is missing.",
+  "projects": {}
+}
