@@ -226,6 +226,11 @@
       "github": "sebasfavaron/signage-lab",
       "platform": "infrastructure",
       "role": "Digital signage infrastructure, fleet, and deployment tooling",
+      "notes": [
+        "Fallback architecture when direct TV browser deployment is not viable",
+        "Runs channel playback locally on Raspberry Pi hardware instead of depending on the TV browser",
+        "Useful reference for kiosk boot, local playback reliability, and offline-first signage operations"
+      ],
       "branch_model": "explicit",
       "dependency_order": 14,
       "depends_on": [],
@@ -243,6 +248,11 @@
       "github": "sebasfavaron/signage-channels",
       "platform": "frontend",
       "role": "Channel content for the signage platform",
+      "notes": [
+        "Content bundle repo for the Raspberry Pi signage stack",
+        "Versioned channel manifests and playlist assets consumed by signage-lab",
+        "Not the preferred direct-to-TV browser approach"
+      ],
       "branch_model": "explicit",
       "dependency_order": 15,
       "depends_on": [
@@ -262,6 +272,10 @@
       "github": "sebasfavaron/street-cast-server",
       "platform": "fullstack",
       "role": "Street Cast server and admin application",
+      "notes": [
+        "Control plane for advertisers, campaigns, devices, manifests, and impression analytics",
+        "Pairs with street-cast-pwa when running the direct browser-based display approach"
+      ],
       "branch_model": "explicit",
       "dependency_order": 16,
       "depends_on": [],
@@ -279,6 +293,11 @@
       "github": "sebasfavaron/street-cast-pwa",
       "platform": "frontend",
       "role": "Street Cast playback PWA for display devices",
+      "notes": [
+        "Preferred approach for demos: open the app directly in the TV browser and use browser storage for local video caching",
+        "Goal is to avoid depending on extra Raspberry Pi hardware when the internal TV browser is sufficient",
+        "If browser-storage or playback gaps remain, track them as follow-up tasks instead of shifting architecture silently"
+      ],
       "branch_model": "explicit",
       "dependency_order": 17,
       "depends_on": [
