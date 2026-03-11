@@ -11,7 +11,7 @@ This repo orchestrates development across multiple repositories as a unified fea
 ### Git
 
 - All changes to `main` through PRs.
-- Pre-push gate mandatory: run `lint_cmd` and `type_check_cmd` from `.cursor/repos.json` before push.
+- Pre-push gate mandatory: run `lint_cmd` and `type_check_cmd` from `.agents/repos.json` before push.
 - If branch introduces new failures: do not push until fixed.
 - Pre-existing failures on base branch do not block push; call them out explicitly.
 - Destructive ops forbidden unless explicit approval.
@@ -26,7 +26,7 @@ This repo orchestrates development across multiple repositories as a unified fea
 
 ## Repo Paths
 
-Developer-local paths are in `.cursor/local-config.json` (gitignored).
+Developer-local paths are in `.agents/local-config.json` (gitignored).
 
 Self-modification: include this repo key in local config with path `.`.
 
@@ -48,12 +48,12 @@ When a skill operates on one feature (`/commit`, `/pr`, `/status --current`, `/m
 
 1. If explicit feature id argument exists and context file exists, use it.
 2. Infer from conversation context (ticket/id/branch references).
-3. Use `.cursor/current-feature` if valid.
+3. Use `.agents/current-feature` if valid.
 4. If exactly one active context exists, use it and write `current-feature`.
 5. If multiple exist and unresolved, ask user to choose.
 
 Legacy migration:
-- If `feature-contexts/` missing or empty and `.cursor/feature-context.json` exists, migrate once to `feature-contexts/<id>.json` + `current-feature`, then remove legacy file.
+- If `feature-contexts/` missing or empty and `.agents/feature-context.json` exists, migrate once to `feature-contexts/<id>.json` + `current-feature`, then remove legacy file.
 
 ## Optional Team Mapping
 

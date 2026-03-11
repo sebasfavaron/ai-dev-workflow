@@ -7,7 +7,7 @@ description: Create or update PRs across feature repos in dependency order
 
 ## Resolve Scope
 
-Resolve feature via `AGENTS.md` procedure and load `.cursor/feature-contexts/<id>.json`.
+Resolve feature via `AGENTS.md` procedure and load `.agents/feature-contexts/<id>.json`.
 
 ## Workflow
 

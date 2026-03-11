@@ -1,25 +1,25 @@
 # AI Dev Workflow
 
-A Cursor-based orchestration layer for developing features across multiple repositories from one control repo.
+A Codex-based orchestration layer for developing features across multiple repositories from one control repo.
 
 ## Prerequisites
 
 - [Git](https://git-scm.com/)
 - [GitHub CLI (`gh`)](https://cli.github.com/) — authenticated via `gh auth login`
 - [`jq`](https://jqlang.github.io/jq/) — used by merge-watch
-- [Cursor](https://cursor.sh/)
+- [Codex](https://openai.com/codex/)
 
 ## Quick Start
 
 1. Clone this repo.
-2. Open it in Cursor.
+2. Open it in Codex.
 3. Run `/initial-setup`.
 
 `/initial-setup` will:
-- Create `.cursor/local-config.json` from the example when missing
+- Create `.agents/local-config.json` from the example when missing
 - Validate configured repos and write access
 - Offer clone or path updates for missing repos
-- Verify every configured repo has metadata in `.cursor/repos.json`
+- Verify every configured repo has metadata in `.agents/repos.json`
 
 ## Commands
 
@@ -50,11 +50,11 @@ A Cursor-based orchestration layer for developing features across multiple repos
 
 ### Local config (gitignored)
 
-`.cursor/local-config.json` maps repo names to local filesystem paths.
+`.agents/local-config.json` maps repo names to local filesystem paths.
 
 ### Repo config (committed)
 
-`.cursor/repos.json` is the single source of truth for:
+`.agents/repos.json` is the single source of truth for:
 - platform
 - base branch / PR base
 - lint and type-check commands
@@ -63,15 +63,15 @@ A Cursor-based orchestration layer for developing features across multiple repos
 
 ### Optional team/project map
 
-`.cursor/teams.json` is optional.
+`.agents/teams.json` is optional.
 - If present: skills can use aliases/prefix validation.
 - If missing: skills continue without team-based validation.
 
 ### Feature context (gitignored)
 
-- `.cursor/feature-contexts/<id>.json` — one file per active feature
-- `.cursor/current-feature` — pointer used by `/commit`, `/pr`, `/status --current`, `/merge-watch`
-- `.cursor/feature-history.json` — archived features, written by `/archive-merged`
+- `.agents/feature-contexts/<id>.json` — one file per active feature
+- `.agents/current-feature` — pointer used by `/commit`, `/pr`, `/status --current`, `/merge-watch`
+- `.agents/feature-history.json` — archived features, written by `/archive-merged`
 
 ## Naming Conventions
 

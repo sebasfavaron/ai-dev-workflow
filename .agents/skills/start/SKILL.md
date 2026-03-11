@@ -14,9 +14,9 @@ Accepts:
 
 ## Data Sources
 
-- `.cursor/repos.json` for repo metadata
-- `.cursor/local-config.json` for local paths
-- `.cursor/teams.json` only if present (optional)
+- `.agents/repos.json` for repo metadata
+- `.agents/local-config.json` for local paths
+- `.agents/teams.json` only if present (optional)
 
 ## Workflow
 
@@ -45,9 +45,9 @@ Accepts:
   - `git checkout -b <branch_name>`
 
 5. Save feature context.
-- Write `.cursor/feature-contexts/<id>.json`
-- Write `.cursor/current-feature` with the same id
-- Support one-time migration from legacy `.cursor/feature-context.json`
+- Write `.agents/feature-contexts/<id>.json`
+- Write `.agents/current-feature` with the same id
+- Support one-time migration from legacy `.agents/feature-context.json`
 
 6. Output short summary and offer next action.
 - If user chose setup-only, stop and remind `/commit`.

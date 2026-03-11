@@ -17,7 +17,7 @@ description: Watch PR checks/review status, keep branch updated, and auto-merge 
 3. Verify `jq` is installed.
 
 4. Run watcher script in foreground first:
-- `EXIT_ON_CI_FAIL=1 bash .cursor/skills/merge-watch/merge-watch.sh "<repo_path>" "<pr_number>"`
+- `EXIT_ON_CI_FAIL=1 bash .agents/skills/merge-watch/merge-watch.sh "<repo_path>" "<pr_number>"`
 - 1-hour timeout
 
 5. Exit handling:
