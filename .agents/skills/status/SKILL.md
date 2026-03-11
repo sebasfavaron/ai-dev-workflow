@@ -7,7 +7,7 @@ description: View cross-repo status for all active features or current feature
 
 ## Modes
 
-- `/status`: show all features in `.cursor/feature-contexts/`
+- `/status`: show all features in `.agents/feature-contexts/`
 - `/status --current [id]`: show one resolved feature
 
 ## Table

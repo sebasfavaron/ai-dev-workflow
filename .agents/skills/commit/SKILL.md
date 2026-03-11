@@ -7,7 +7,7 @@ description: Stage, commit, run pre-push gate, and push changes across feature r
 
 ## Resolve Scope
 
-Resolve current feature using `AGENTS.md` "Resolve Feature For Skills" and load `.cursor/feature-contexts/<id>.json`.
+Resolve current feature using `AGENTS.md` "Resolve Feature For Skills" and load `.agents/feature-contexts/<id>.json`.
 
 ## Workflow
 
@@ -20,7 +20,7 @@ Resolve current feature using `AGENTS.md` "Resolve Feature For Skills" and load 
 - never force-add ignored files
 - do not include unrelated repos outside feature context
 5. Mandatory pre-push gate for each repo with commits:
-- run `lint_cmd` and `type_check_cmd` from `.cursor/repos.json` when configured
+- run `lint_cmd` and `type_check_cmd` from `.agents/repos.json` when configured
 - if branch introduces new failures: stop and fix first
 - if failures are already on base: report and proceed
 6. Push branches (`git push -u origin <branch_name>`).
