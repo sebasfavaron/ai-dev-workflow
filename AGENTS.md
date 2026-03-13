@@ -29,6 +29,12 @@ This repo orchestrates development across multiple repositories as a unified fea
 Developer-local paths are in `.agents/local-config.json` (gitignored).
 
 Self-modification: include this repo key in local config with path `.`.
+When this repo lives at `~/ai-dev-workflow`, store sibling repo paths as absolute `~/Code/...` values.
+
+## Shared Memory
+
+Use `~/agents-database` as the durable shared-memory layer.
+Workflow state still lives in `.agents/*`, but notable feature context and workflow notes should be mirrored through `scripts/ai_dev_workflow_memory.py`.
 
 ## Shared Data Files
 
