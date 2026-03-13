@@ -52,6 +52,12 @@ A Codex-based orchestration layer for developing features across multiple reposi
 
 `.agents/local-config.json` maps repo names to local filesystem paths.
 
+## Skill Ownership
+
+- `ai-dev-workflow` skills stay in this repo and remain project-workflow specific.
+- reusable personal-assistant skills live in the separate `personal-agent` repo.
+- expose `personal-agent` skills globally via symlinks in `~/.codex/skills`; do not copy them here.
+
 ### Repo config (committed)
 
 `.agents/repos.json` is the single source of truth for:
