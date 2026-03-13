@@ -64,6 +64,42 @@ def ingest_note(args: argparse.Namespace) -> dict:
     return service.ingest(payload)
 
 
+def intake_task(args: argparse.Namespace) -> dict:
+    service = load_memory_service()
+    content = "\n".join(
+        line
+        for line in [
+            f"Request: {args.input}",
+            f"Origin: {args.origin}",
+            f"Project: {args.project or ''}".strip(),
+            f"Repo hint: {args.repo_hint or ''}".strip(),
+        ]
+        if line.strip()
+    )
+    payload = {
+        "id": f"mem_{uuid.uuid4().hex}",
+        "type": "task",
+        "scope": "agent",
+        "project_id": None,
+        "repo_id": None,
+        "title": args.title or f"Code handoff from {args.origin}",
+        "content": content,
+        "summary": compact(content),
+        "confidence": 0.93,
+        "freshness": 0.95,
+        "source_ref": SOURCE_REF,
+        "evidence_ref": args.origin,
+        "metadata": {
+            "kind": "code_handoff",
+            "origin": args.origin,
+            "project": args.project,
+            "repo_hint": args.repo_hint,
+            "repo_root": str(REPO_ROOT),
+        },
+    }
+    return service.ingest(payload)
+
+
 def sync_feature(args: argparse.Namespace) -> dict:
     service = load_memory_service()
     context_path = feature_context_path(args.feature_id)
@@ -138,6 +174,14 @@ def build_parser() -> argparse.ArgumentParser:
     add_note.add_argument("--confidence", type=float, default=0.9)
     add_note.add_argument("--freshness", type=float, default=0.9)
     add_note.set_defaults(func=ingest_note)
+
+    intake = sub.add_parser("intake-task")
+    intake.add_argument("--input", required=True)
+    intake.add_argument("--origin", default="personal-agent")
+    intake.add_argument("--title", default=None)
+    intake.add_argument("--project", default=None)
+    intake.add_argument("--repo-hint", default=None)
+    intake.set_defaults(func=intake_task)
 
     sync = sub.add_parser("sync-feature")
     sync.add_argument("--feature-id", default=None)
