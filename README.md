@@ -52,11 +52,21 @@ A Codex-based orchestration layer for developing features across multiple reposi
 
 `.agents/local-config.json` maps repo names to local filesystem paths.
 
+After moving this repo to `~/ai-dev-workflow`, sibling repo paths should be absolute `~/Code/...` entries instead of `../repo` relative paths.
+
 ## Skill Ownership
 
 - `ai-dev-workflow` skills stay in this repo and remain project-workflow specific.
 - reusable personal-assistant skills live in the separate `personal-agent` repo.
 - expose `personal-agent` skills globally via symlinks in `~/.codex/skills`; do not copy them here.
+
+## Shared Memory
+
+`ai-dev-workflow` now participates in the shared memory system at `~/agents-database`.
+
+- use `python3 scripts/ai_dev_workflow_memory.py search --query "..."` to query workflow memory
+- use `python3 scripts/ai_dev_workflow_memory.py add-note --title "..." --content "..."` to persist workflow notes
+- use `python3 scripts/ai_dev_workflow_memory.py sync-feature` to mirror the current feature context into shared memory
 
 ### Repo config (committed)
 
