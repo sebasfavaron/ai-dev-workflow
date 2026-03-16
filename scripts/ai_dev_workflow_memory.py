@@ -102,8 +102,23 @@ def intake_task(args: argparse.Namespace) -> dict:
 
 
 def run_task(args: argparse.Namespace) -> dict:
+    try:
+        payload = json.loads(args.payload_json)
+    except json.JSONDecodeError as exc:
+        return {
+            "status": "blocked",
+            "summary": f"ai-dev-workflow received invalid handoff payload JSON: {exc}",
+            "task_id": args.task_id,
+            "artifacts": [],
+        }
+    if not isinstance(payload, dict):
+        return {
+            "status": "blocked",
+            "summary": "ai-dev-workflow received invalid handoff payload: expected a JSON object.",
+            "task_id": args.task_id,
+            "artifacts": [],
+        }
     service = load_memory_service()
-    payload = json.loads(args.payload_json)
     content = "\n".join(
         [
             f"Task ID: {args.task_id}",
@@ -133,7 +148,7 @@ def run_task(args: argparse.Namespace) -> dict:
                 },
             }
         )
-    except sqlite3.OperationalError as exc:
+    except sqlite3.Error as exc:
         return {
             "status": "blocked",
             "summary": f"ai-dev-workflow could not persist handoff intake: {exc}",
