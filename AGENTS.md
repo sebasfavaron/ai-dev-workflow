@@ -29,7 +29,7 @@ This repo orchestrates development across multiple repositories as a unified fea
 Developer-local paths are in `.agents/local-config.json` (gitignored).
 
 Self-modification: include this repo key in local config with path `.`.
-When this repo lives at `~/ai-dev-workflow`, store sibling repo paths as absolute `~/Code/...` values.
+When this repo lives at `~/ai-dev-workflow`, store sibling repo paths as `~/...` values.
 
 ## Shared Memory
 

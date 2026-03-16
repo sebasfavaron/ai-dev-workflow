@@ -52,7 +52,7 @@ A Codex-based orchestration layer for developing features across multiple reposi
 
 `.agents/local-config.json` maps repo names to local filesystem paths.
 
-After moving this repo to `~/ai-dev-workflow`, sibling repo paths should be absolute `~/Code/...` entries instead of `../repo` relative paths.
+After moving this repo to `~/ai-dev-workflow`, sibling repo paths should be `~/...` entries instead of `../repo` relative paths.
 
 ## Skill Ownership
 
@@ -66,7 +66,7 @@ After moving this repo to `~/ai-dev-workflow`, sibling repo paths should be abso
 
 V1 system reference:
 
-- sibling front door and bootstrap map live in `~/Code/personal-agent/docs/system-v1.md`
+- sibling front door and bootstrap map live in `~/personal-agent/docs/system-v1.md`
 
 - use `python3 scripts/ai_dev_workflow_memory.py search --query "..."` to query workflow memory
 - use `python3 scripts/ai_dev_workflow_memory.py add-note --title "..." --content "..."` to persist workflow notes
