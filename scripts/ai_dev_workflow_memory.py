@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sqlite3
 import sys
 import uuid
 from pathlib import Path
@@ -100,6 +101,69 @@ def intake_task(args: argparse.Namespace) -> dict:
     return service.ingest(payload)
 
 
+def run_task(args: argparse.Namespace) -> dict:
+    try:
+        payload = json.loads(args.payload_json)
+    except json.JSONDecodeError as exc:
+        return {
+            "status": "blocked",
+            "summary": f"ai-dev-workflow received invalid handoff payload JSON: {exc}",
+            "task_id": args.task_id,
+            "artifacts": [],
+        }
+    if not isinstance(payload, dict):
+        return {
+            "status": "blocked",
+            "summary": "ai-dev-workflow received invalid handoff payload: expected a JSON object.",
+            "task_id": args.task_id,
+            "artifacts": [],
+        }
+    service = load_memory_service()
+    content = "\n".join(
+        [
+            f"Task ID: {args.task_id}",
+            f"Origin: {args.origin}",
+            f"Reason: {args.reason}",
+            f"Payload: {json.dumps(payload, sort_keys=True)}",
+        ]
+    )
+    try:
+        memory = service.ingest(
+            {
+                "id": f"mem_{uuid.uuid4().hex}",
+                "type": "episode",
+                "scope": "agent",
+                "title": f"Subagent intake {args.task_id}",
+                "content": content,
+                "summary": compact(content),
+                "confidence": 0.91,
+                "freshness": 0.95,
+                "source_ref": SOURCE_REF,
+                "evidence_ref": args.origin,
+                "metadata": {
+                    "kind": "subagent_handoff",
+                    "task_id": args.task_id,
+                    "reason": args.reason,
+                    "idempotency_key": payload.get("idempotency_key"),
+                },
+            }
+        )
+    except sqlite3.Error as exc:
+        return {
+            "status": "blocked",
+            "summary": f"ai-dev-workflow could not persist handoff intake: {exc}",
+            "task_id": args.task_id,
+            "artifacts": [],
+        }
+    return {
+        "status": "accepted",
+        "summary": "ai-dev-workflow accepted the handoff and persisted intake context.",
+        "memory_id": memory["id"],
+        "task_id": args.task_id,
+        "artifacts": [],
+    }
+
+
 def sync_feature(args: argparse.Namespace) -> dict:
     service = load_memory_service()
     context_path = feature_context_path(args.feature_id)
@@ -182,6 +246,13 @@ def build_parser() -> argparse.ArgumentParser:
     intake.add_argument("--project", default=None)
     intake.add_argument("--repo-hint", default=None)
     intake.set_defaults(func=intake_task)
+
+    run_task_cmd = sub.add_parser("run-task")
+    run_task_cmd.add_argument("--task-id", required=True)
+    run_task_cmd.add_argument("--origin", required=True)
+    run_task_cmd.add_argument("--reason", required=True)
+    run_task_cmd.add_argument("--payload-json", required=True)
+    run_task_cmd.set_defaults(func=run_task)
 
     sync = sub.add_parser("sync-feature")
     sync.add_argument("--feature-id", default=None)

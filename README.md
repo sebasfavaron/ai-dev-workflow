@@ -52,7 +52,7 @@ A Codex-based orchestration layer for developing features across multiple reposi
 
 `.agents/local-config.json` maps repo names to local filesystem paths.
 
-After moving this repo to `~/ai-dev-workflow`, sibling repo paths should be absolute `~/Code/...` entries instead of `../repo` relative paths.
+After moving this repo to `~/ai-dev-workflow`, sibling repo paths should be `~/...` entries instead of `../repo` relative paths.
 
 ## Skill Ownership
 
@@ -64,9 +64,15 @@ After moving this repo to `~/ai-dev-workflow`, sibling repo paths should be abso
 
 `ai-dev-workflow` now participates in the shared memory system at `~/agents-database`.
 
+V1 system reference:
+
+- sibling front door and bootstrap map live in `~/personal-agent/docs/system-v1.md`
+
 - use `python3 scripts/ai_dev_workflow_memory.py search --query "..."` to query workflow memory
 - use `python3 scripts/ai_dev_workflow_memory.py add-note --title "..." --content "..."` to persist workflow notes
 - use `python3 scripts/ai_dev_workflow_memory.py sync-feature` to mirror the current feature context into shared memory
+- use `python3 scripts/ai_dev_workflow_memory.py run-task --task-id ... --origin personal-agent --reason ... --payload-json ...` for subagent handoffs
+- resume multi-repo V1 work from the shared DB task/handoff ids, not from local scratch notes
 
 ### Repo config (committed)
 
